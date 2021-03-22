@@ -83,5 +83,5 @@ SQL>SELECT a.tablespace_name "表空间名",Total/1024/1024 "大小MB",
 * autoextensible是显示表空间中的数据文件是否自动增加。
 * MAX_MB是指数据文件的最大容量。
 ![自定义查询](result4.jpg)
-####数据库和表空间占用分析
+#### 数据库和表空间占用分析
   数据库pdborcl中包含了con_ress_view角色和new_users用户。 使用表空间users存储表的数据。 表空间中存储了很多相同名称的表mytable和视图myview，但分别属性于不同的用户，不会引起混淆。 随着用户往表中插入数据，表空间的磁盘使用量会增加。
