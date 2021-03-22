@@ -1,5 +1,5 @@
 # oracle
-##实验一
+##实验二
 #####姓名：何政梁 
 #####学号：201810414112 
 #####班级：18软工一班
@@ -31,7 +31,7 @@ Grant succeeded.
 SQL> exit
 ```
 ![自定义查询](result1.jpg)
-* 第2步：新用户new_user连接到pdborcl，创建表mytable和视图myview，插入数据，最后将myview的SELECT对象权限授予hr用户。
+* 第2步：新用户new_users连接到pdborcl，创建表mytable和视图myview，插入数据，最后将myview的SELECT对象权限授予hr用户。
 ```
 $ sqlplus new_users/123@202.115.82.8/czm
 SQL> show user;
@@ -54,7 +54,7 @@ Grant succeeded.
 SQL>exit
 ```
 ![自定义查询](result2.jpg)
-* 第3步：用户hr连接到pdborcl，查询new_user授予它的视图myview
+* 第3步：用户hr连接到pdborcl，查询new_users授予它的视图myview
 ```
 $ sqlplus hr/123@pdborcl
 SQL> SELECT * FROM new_user.myview;
