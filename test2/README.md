@@ -5,32 +5,28 @@
 ##### 班级：18软工一班
 
 ## 实验目的
-掌握用户管理、角色管理、权根维护与分配的能力，掌握用户之间共享对象的操作技能。
+掌握分区表的创建方法，掌握各种分区方式的使用场景。
 ## 实验内容
-Oracle有一个开发者角色resource，可以创建表、过程、触发器等对象，但是不能创建视图。本训练要求：
-
-* 在pdborcl插接式数据中创建一个新的本地角色con_res_view，该角色包含connect和resource角色，同时也包含CREATE VIEW权限，这样任何拥有con_res_view的用户就同时拥有这三种权限。
-* 创建角色之后，再创建用户new_user，给用户分配表空间，设置限额为50M，授予con_res_view角色。
-* 最后测试：用新用户new_user连接数据库、创建表，插入数据，创建视图，查询表和视图的数据。
+本实验使用3个表空间：USERS,USERS02,USERS03。在表空间中创建两张表：订单表(orders)与订
+单详表(order_details)。
+使用你自己的账号创建本实验的表，表创建在上述3个分区，自定义分区策略。
+你需要使用system用户给你自己的账号分配上述分区的使用权限。你需要使用system用户给你的用户
+分配可以查询执行计划的权限。
+表创建成功后，插入数据，数据能并平均分布到各个分区。每个表的数据都应该大于1万行，对表进行
+联合查询。
+写出插入数据的语句和查询数据的语句，并分析语句的执行计划。
+进行分区与不分区的对比实验
 
 ####  实验步骤
-* 第1步：以system登录到pdborcl，创建角色con_ress_view和用户new_users，并授权和分配空间：
-* 本实验用户名:new_users
+* 第1步：使用system用户给自己的账号(yyt)分配上述分区的使用权限
 ```
-$ sqlplus system/123@202.115.82.8/czm
-SQL> CREATE ROLE con_ress_view;
-Role created.
-SQL> GRANT connect,resource,CREATE VIEW TO con_ress_view;
-Grant succeeded.
-SQL> CREATE USER new_users IDENTIFIED BY 123 DEFAULT TABLESPACE users TEMPORARY TABLESPACE temp;
-User created.
-SQL> ALTER USER new_users QUOTA 50M ON users;
-User altered.
-SQL> GRANT con_ress_view TO new_users;
-Grant succeeded.
-SQL> exit
+[student@deep02 ~]$sqlplus system/123@localhost/pdborcl
+SQL>ALTER USER your_user QUOTA UNLIMITED ON USERS;
+SQL>ALTER USER your_user QUOTA UNLIMITED ON USERS02;
+SQL>ALTER USER your_user QUOTA UNLIMITED ON USERS03;
+SQL>exit
 ```
-![自定义查询](result1.jpg)
+![自定义查询](r1.jpg)
 * 第2步：新用户new_users连接到pdborcl，创建表mytable和视图myview，插入数据，最后将myview的SELECT对象权限授予hr用户。
 ```
 $ sqlplus new_users/123@202.115.82.8/czm
