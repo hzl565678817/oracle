@@ -137,15 +137,15 @@ and e.manager_id=d.department_id
 ![自定义查询](r6.jpg)
 * 7.查询部门表，统计每个部门的销售总金额。
 ```
-select d.department_name,sum(sum1)
+select ds.department_name,sum(sum1)
 from (
 select (d.product_num*d.product_price) sum1
-from order_details d,orders o,departments d,employees e
-where d.department_id=e.department_id
+from order_details d,orders o,departments ds,employees e
+where ds.department_id=e.department_id
 and o.employee_id = e.employee_id
 and o.order_id=d.order_id
-),departments d
-group by d.department_name
+),departments ds
+group by ds.department_name
 ```
 ![自定义查询](r7.jpg)
 
